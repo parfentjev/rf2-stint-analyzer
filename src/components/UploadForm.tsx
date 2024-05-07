@@ -1,6 +1,5 @@
 import { ChangeEvent, FC, useState } from 'react'
-import { readFile } from '../analyzer/file-reader'
-import { deserializeXML } from '../analyzer/analyzer'
+import { readFile, deserializeXML } from '../analyzer/xml'
 import { RaceResults } from '../analyzer/models'
 
 interface UploadFormProps {
@@ -46,7 +45,7 @@ const UploadForm: FC<UploadFormProps> = (props) => {
                     className="hidden"
                     onChange={fileHandler}
                 />
-                <label htmlFor="file" className="file-label">
+                <label htmlFor="file" className="action-label">
                     {fileLabel}
                 </label>
             </div>

@@ -1,9 +1,25 @@
 export class RaceResults {
-    constructor(public venue: string, public date: string) {}
+    constructor(public venue: string, public date: string, public race: Race) {}
 }
 
-// Race
+export class Race {
+    constructor(public laps: number, public drivers: Driver[]) {}
+}
 
-// Driver
+export class Driver {
+    constructor(
+        public name: string,
+        public position: number,
+        public laps: Lap[]
+    ) {}
+}
 
-// Lap
+export class Lap {
+    constructor(
+        public number: number,
+        public time: number,
+        public frontCompound: string,
+        public rearCompound: string,
+        public pit?: string
+    ) {}
+}
