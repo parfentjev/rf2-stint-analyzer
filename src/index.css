@@ -96,3 +96,13 @@ body {
 .section-blue {
     background-color: rgb(157, 165, 255);
 }
+
+a {
+    text-decoration: none;
+    color: var(--color1);
+}
+
+footer {
+    text-align: center;
+    margin: 1rem auto;
+}

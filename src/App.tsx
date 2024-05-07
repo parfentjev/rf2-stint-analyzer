@@ -14,6 +14,15 @@ function App() {
         <>
             <UploadForm onResultsChange={handleResults} />
             {results && <RaceResultsRenderer results={results} />}
+            <footer>
+                <a
+                    href="https://github.com/parfentjev/rf2-stint-analyzer"
+                    target="_blank"
+                    rel="noreferrer"
+                >
+                    github
+                </a>
+            </footer>
         </>
     )
 }
