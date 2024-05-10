@@ -25,13 +25,13 @@ const LapsRenderer: FC<{ driver: Driver; raceLaps: number }> = ({
                 ...stints,
                 new Stint(
                     stintBegin,
-                    laps[i].number - 1,
+                    laps[i].number,
                     laps[i].frontCompound,
                     false
                 ),
             ]
 
-            stintBegin = laps[i].number
+            stintBegin = laps[i].number + 1
         } else if (laps.length - 1 === i) {
             stints = [
                 ...stints,
