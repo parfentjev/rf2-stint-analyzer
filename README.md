@@ -13,7 +13,13 @@ If the tire name is not on this list, no color will be applied. Additionally, th
 
 ## Example
 
-![rF2 Stint Visualizer: example output](example.jpg)
+Race results
+
+![rF2 Stint Visualizer: example output](example-2.jpg)
+
+App with the editor
+
+![rF2 Stint Visualizer: app](example-1.jpg)
 
 ## Issue with Logs
 
