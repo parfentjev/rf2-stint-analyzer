@@ -46,45 +46,40 @@ const LapsRenderer: FC<{ driver: Driver; raceLaps: number }> = ({
     }
 
     return (
-        <div className="driver-row">
-            <p>
-                P{driver.position} {driver.name}
-            </p>
-            <div className="progress-bar" style={{ width: `100%` }}>
-                {stints.map((s) => {
-                    const stintLength = s.end - s.begin + 1
-                    var color = ''
+        <div className="progress-bar" style={{ width: `100%` }}>
+            {stints.map((s) => {
+                const stintLength = s.end - s.begin + 1
+                var color = ''
 
-                    switch (s.compound) {
-                        case 'Soft':
-                            color = 'section-white'
-                            break
-                        case 'Medium':
-                            color = 'section-yellow'
-                            break
-                        case 'Hard':
-                            color = 'section-green'
-                            break
-                        case 'Wet':
-                            color = 'section-blue'
-                            break
-                    }
+                switch (s.compound) {
+                    case 'Soft':
+                        color = 'section-white'
+                        break
+                    case 'Medium':
+                        color = 'section-yellow'
+                        break
+                    case 'Hard':
+                        color = 'section-green'
+                        break
+                    case 'Wet':
+                        color = 'section-blue'
+                        break
+                }
 
-                    return (
-                        <div
-                            key={`${s.begin}-${s.end}`}
-                            className={`progress-section ${color} ${
-                                !s.final && 'section-divider'
-                            }`}
-                            style={{
-                                width: `${(stintLength / raceLaps) * 100}%`,
-                            }}
-                        >
-                            {stintLength}
-                        </div>
-                    )
-                })}
-            </div>
+                return (
+                    <div
+                        key={`${s.begin}-${s.end}`}
+                        className={`progress-section ${color} ${
+                            !s.final && 'section-divider'
+                        }`}
+                        style={{
+                            width: `${(stintLength / raceLaps) * 100}%`,
+                        }}
+                    >
+                        {stintLength}
+                    </div>
+                )
+            })}
         </div>
     )
 }

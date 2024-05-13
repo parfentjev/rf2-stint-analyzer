@@ -1,9 +1,9 @@
 :root {
-    --color1: #dd7373ff;
-    --color2: #3b3561ff;
-    --color3: #ead94cff;
-    --color4: #d1d1d1ff;
-    --color5: #51a3a3ff;
+    --color0: rgb(30, 30, 30);
+    --color1: rgb(207, 207, 207);
+    --color2: rgb(221, 115, 115);
+    --color3: rgb(255, 230, 0);
+    --color4: rgb(81, 163, 163);
 }
 
 body {
@@ -13,8 +13,8 @@ body {
         'Helvetica Neue', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-color: var(--color4);
-    color: var(--color2);
+    background-color: var(--color0);
+    color: var(--color1);
     margin: 1rem 0;
 }
 
@@ -28,7 +28,7 @@ body {
 }
 
 .text-highlight {
-    color: var(--color1);
+    color: var(--color2);
 }
 
 .hidden {
@@ -39,17 +39,16 @@ body {
     display: inline-block;
     padding: 10px 20px;
     color: var(--color3);
-    background-color: var(--color1);
+    background-color: var(--color2);
     cursor: pointer;
     transition: background-color 0.3s ease;
-    border: 1px solid var(--color1);
+    border: 1px solid var(--color2);
     border-radius: 5px;
 }
 
 .results {
     padding: 1rem;
-    background-color: var(--color4);
-    color: var(--color2);
+    color: var(--color1);
 }
 
 .results h1 {
@@ -61,8 +60,8 @@ body {
 }
 
 .progress-bar {
-    height: 30px;
-    background-color: rgb(162, 162, 162);
+    height: 1.2rem;
+    background-color: rgb(89, 89, 89);
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     overflow: hidden;
@@ -74,11 +73,12 @@ body {
     justify-content: center;
     align-items: center;
     display: flex;
+    color: black;
 }
 
 .section-divider {
     box-sizing: border-box;
-    border-right: 1px solid rgb(162, 162, 162);
+    border-right: 3px solid var(--color0);
 }
 
 .section-white {
@@ -86,23 +86,27 @@ body {
 }
 
 .section-yellow {
-    background-color: rgb(255, 255, 157);
+    background-color: rgb(255, 213, 0);
 }
 
 .section-green {
-    background-color: rgb(165, 255, 157);
+    background-color: rgb(26, 213, 0);
 }
 
 .section-blue {
-    background-color: rgb(157, 165, 255);
+    background-color: rgb(0, 21, 255);
 }
 
 a {
     text-decoration: none;
-    color: var(--color1);
+    color: var(--color2);
 }
 
 footer {
     text-align: center;
     margin: 1rem auto;
+}
+
+label {
+    margin: 0 1rem;
 }

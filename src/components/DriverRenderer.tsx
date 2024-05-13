@@ -2,16 +2,21 @@ import { FC } from 'react'
 import { Driver, Race } from '../analyzer/models'
 import LapsRenderer from './LapsRenderer'
 
-const DriverRenderer: FC<{ driver: Driver; race: Race }> = ({
-    driver,
-    race,
-}) => {
+interface DriverRendererProps {
+    driver: Driver
+    race: Race
+}
+
+const DriverRenderer: FC<DriverRendererProps> = ({ driver, race }) => {
     return (
-        <>
+        <div className="driver-row">
+            <p>
+                P{driver.position} {driver.name}
+            </p>
             {driver.laps && (
                 <LapsRenderer driver={driver} raceLaps={race.laps} />
             )}
-        </>
+        </div>
     )
 }
 

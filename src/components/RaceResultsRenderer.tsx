@@ -1,17 +1,23 @@
-import { FC, useRef } from 'react'
+import { FC, useRef, useState } from 'react'
 import { RaceResults } from '../analyzer/models'
 import DriverRenderer from './DriverRenderer'
 import html2canvas from 'html2canvas'
+import ResultEditor from './ResultEditor'
 
 const RaceResultsRenderer: FC<{ results: RaceResults }> = ({ results }) => {
     const resultsRef = useRef<HTMLDivElement>(null)
+
+    const [raceResults, setRaceResults] = useState(results)
+    const [showEditor, setShowEditor] = useState(false)
 
     const saveHandler = () => {
         if (!resultsRef.current) {
             return
         }
 
-        html2canvas(resultsRef.current).then((canvas) => {
+        html2canvas(resultsRef.current, {
+            backgroundColor: 'rgb(30, 30, 30)',
+        }).then((canvas) => {
             const a = document.createElement('a')
             a.href = canvas
                 .toDataURL('image/jpeg', 1.0)
@@ -21,20 +27,27 @@ const RaceResultsRenderer: FC<{ results: RaceResults }> = ({ results }) => {
         })
     }
 
+    const editorHandler = () => {
+        setShowEditor(!showEditor)
+    }
+
+    const refreshHandler = (newResults: RaceResults) => {
+        setRaceResults(newResults)
+    }
+
     return (
         <>
             <div className="results" ref={resultsRef}>
                 <h1>
-                    {results.venue} {results.date}
+                    {raceResults.venue}, {raceResults.race.laps} laps
                 </h1>
-                <h2>{results.race.laps} laps</h2>
-                {results.race.drivers
+                {raceResults.race.drivers
                     .sort((a, b) => a.position - b.position)
                     .map((d) => (
                         <DriverRenderer
                             key={d.name}
                             driver={d}
-                            race={results.race}
+                            race={raceResults.race}
                         />
                     ))}
             </div>
@@ -42,13 +55,27 @@ const RaceResultsRenderer: FC<{ results: RaceResults }> = ({ results }) => {
                 <input
                     id="save"
                     type="button"
-                    value="Save"
                     className="hidden"
                     onClick={saveHandler}
                 />
                 <label htmlFor="save" className="action-label">
                     Save
                 </label>
+                <input
+                    id="editor"
+                    type="button"
+                    className="hidden"
+                    onClick={editorHandler}
+                />
+                <label htmlFor="editor" className="action-label">
+                    Editor
+                </label>
+                {showEditor && (
+                    <ResultEditor
+                        results={raceResults}
+                        onRefresh={refreshHandler}
+                    />
+                )}
             </div>
         </>
     )
