@@ -2,11 +2,13 @@ import { FC, useRef, useState } from 'react'
 import { RaceResults } from '../analyzer/models'
 import DriverRenderer from './DriverRenderer'
 import html2canvas from 'html2canvas'
-import ResultEditor from './ResultEditor'
+import JsonEditor from './JsonEditor'
+import { useAppContext } from '../storage/app-context'
 
 const RaceResultsRenderer: FC<{ results: RaceResults }> = ({ results }) => {
     const resultsRef = useRef<HTMLDivElement>(null)
 
+    const { compoundColors } = useAppContext()
     const [raceResults, setRaceResults] = useState(results)
     const [showEditor, setShowEditor] = useState(false)
 
@@ -50,6 +52,17 @@ const RaceResultsRenderer: FC<{ results: RaceResults }> = ({ results }) => {
                             race={raceResults.race}
                         />
                     ))}
+                <div className="tire-colors">
+                    {compoundColors.map((i) => (
+                        <>
+                            <span
+                                className="tire-colors-example"
+                                style={{ backgroundColor: i.color }}
+                            ></span>
+                            {i.name}
+                        </>
+                    ))}
+                </div>
             </div>
             <div className="text-center">
                 <input
@@ -71,10 +84,7 @@ const RaceResultsRenderer: FC<{ results: RaceResults }> = ({ results }) => {
                     Editor
                 </label>
                 {showEditor && (
-                    <ResultEditor
-                        results={raceResults}
-                        onRefresh={refreshHandler}
-                    />
+                    <JsonEditor data={raceResults} onRefresh={refreshHandler} />
                 )}
             </div>
         </>

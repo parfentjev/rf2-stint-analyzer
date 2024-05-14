@@ -1,5 +1,6 @@
 import { FC } from 'react'
 import { Driver } from '../analyzer/models'
+import { useAppContext } from '../storage/app-context'
 
 class Stint {
     constructor(
@@ -14,6 +15,7 @@ const LapsRenderer: FC<{ driver: Driver; raceLaps: number }> = ({
     driver,
     raceLaps,
 }) => {
+    const context = useAppContext()
     const laps = driver.laps
 
     var stints: Stint[] = []
@@ -49,31 +51,20 @@ const LapsRenderer: FC<{ driver: Driver; raceLaps: number }> = ({
         <div className="progress-bar" style={{ width: `100%` }}>
             {stints.map((s) => {
                 const stintLength = s.end - s.begin + 1
-                var color = ''
-
-                switch (s.compound) {
-                    case 'Soft':
-                        color = 'section-white'
-                        break
-                    case 'Medium':
-                        color = 'section-yellow'
-                        break
-                    case 'Hard':
-                        color = 'section-green'
-                        break
-                    case 'Wet':
-                        color = 'section-blue'
-                        break
-                }
+                const color =
+                    context.compoundColors.find(
+                        (i) => i.name.toUpperCase() === s.compound.toUpperCase()
+                    )?.color || ''
 
                 return (
                     <div
                         key={`${s.begin}-${s.end}`}
-                        className={`progress-section ${color} ${
+                        className={`progress-section ${
                             !s.final && 'section-divider'
                         }`}
                         style={{
                             width: `${(stintLength / raceLaps) * 100}%`,
+                            backgroundColor: color,
                         }}
                     >
                         {stintLength}

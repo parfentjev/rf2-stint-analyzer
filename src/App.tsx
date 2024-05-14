@@ -2,6 +2,8 @@ import { useCallback, useState } from 'react'
 import { RaceResults } from './analyzer/models'
 import UploadForm from './components/UploadForm'
 import RaceResultsRenderer from './components/RaceResultsRenderer'
+import ColorMappingEditor from './components/ColorMappingEditor'
+import { AppContextProvider } from './storage/app-context'
 
 function App() {
     const [results, setResults] = useState<RaceResults>()
@@ -13,7 +15,10 @@ function App() {
     return (
         <>
             <UploadForm onResultsChange={handleResults} />
-            {results && <RaceResultsRenderer results={results} />}
+            <AppContextProvider>
+                <ColorMappingEditor />
+                {results && <RaceResultsRenderer results={results} />}
+            </AppContextProvider>
             <footer>
                 <a
                     href="https://github.com/parfentjev/rf2-stint-analyzer"

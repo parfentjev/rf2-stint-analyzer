@@ -1,5 +1,4 @@
-import { FC, useState } from 'react'
-import { RaceResults } from '../analyzer/models'
+import { useState } from 'react'
 import AceEditor from 'react-ace'
 
 import 'ace-builds/src-noconflict/mode-javascript'
@@ -7,13 +6,13 @@ import 'ace-builds/src-noconflict/theme-monokai'
 import 'ace-builds/src-noconflict/ext-language_tools'
 import 'ace-builds/webpack-resolver'
 
-interface ResultEditorProps {
-    results: RaceResults
-    onRefresh: (newResults: RaceResults) => void
+interface JsonEditorProps<T> {
+    data: T
+    onRefresh: (newResults: T) => void
 }
 
-const ResultEditor: FC<ResultEditorProps> = ({ results, onRefresh }) => {
-    const [value, setValue] = useState(JSON.stringify(results, null, 2))
+const JsonEditor = <T,>({ data, onRefresh }: JsonEditorProps<T>) => {
+    const [value, setValue] = useState(JSON.stringify(data, null, 2))
 
     const changeHandler = (newValue: string) => {
         setValue(newValue)
@@ -24,7 +23,7 @@ const ResultEditor: FC<ResultEditorProps> = ({ results, onRefresh }) => {
     }
 
     return (
-        <>
+        <div className="text-center">
             <AceEditor
                 mode="javascript"
                 theme="monokai"
@@ -36,7 +35,7 @@ const ResultEditor: FC<ResultEditorProps> = ({ results, onRefresh }) => {
                     tabSize: 2,
                 }}
                 width="100%"
-                height="1080px"
+                height="80vh"
                 style={{ margin: '1rem 0' }}
                 value={value}
                 onChange={changeHandler}
@@ -52,8 +51,8 @@ const ResultEditor: FC<ResultEditorProps> = ({ results, onRefresh }) => {
             <label htmlFor="refresh" className="action-label">
                 Refresh
             </label>
-        </>
+        </div>
     )
 }
 
-export default ResultEditor
+export default JsonEditor

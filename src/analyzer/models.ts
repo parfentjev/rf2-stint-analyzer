@@ -23,3 +23,7 @@ export class Lap {
         public pit?: string
     ) {}
 }
+
+export class CompoundColor {
+    constructor(public name: string, public color: string) {}
+}
