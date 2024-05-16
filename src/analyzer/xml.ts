@@ -58,7 +58,11 @@ const mapLaps = (laps: any) => {
             Number(l.$.num),
             Number(l.$.et),
             extractCompoundName(l.$.fcompound),
+            Number(l.$.twfl),
+            Number(l.$.twfr),
             extractCompoundName(l.$.rcompound),
+            Number(l.$.twrl),
+            Number(l.$.twrr),
             l.$.pit
         )
     })

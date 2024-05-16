@@ -19,7 +19,11 @@ export class Lap {
         public number: number,
         public time: number,
         public frontCompound: string,
+        public frontLeftWear: number,
+        public frontRightWear: number,
         public rearCompound: string,
+        public rearLeftWear: number,
+        public rearRightWear: number,
         public pit?: string
     ) {}
 }

@@ -54,13 +54,13 @@ const RaceResultsRenderer: FC<{ results: RaceResults }> = ({ results }) => {
                     ))}
                 <div className="tire-colors">
                     {compoundColors.map((i) => (
-                        <>
+                        <div key={i.name}>
                             <span
                                 className="tire-colors-example"
                                 style={{ backgroundColor: i.color }}
                             ></span>
                             {i.name}
-                        </>
+                        </div>
                     ))}
                 </div>
             </div>

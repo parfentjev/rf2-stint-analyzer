@@ -1,13 +1,15 @@
 import { FC } from 'react'
 import { Driver } from '../analyzer/models'
 import { useAppContext } from '../storage/app-context'
+import { averageTireWear } from '../analyzer/analyzer'
 
 class Stint {
     constructor(
         public begin: number,
         public end: number,
         public compound: string,
-        public final: boolean
+        public final: boolean,
+        public averageTireWear: number
     ) {}
 }
 
@@ -22,28 +24,22 @@ const LapsRenderer: FC<{ driver: Driver; raceLaps: number }> = ({
     var stintBegin = 1
 
     for (let i = 0; i < laps.length; i++) {
-        if (laps[i].pit === '1') {
+        const pitted = laps[i].pit === '1'
+        const finalStint = laps.length - 1 === i
+
+        if (pitted || finalStint) {
             stints = [
                 ...stints,
                 new Stint(
                     stintBegin,
                     laps[i].number,
                     laps[i].frontCompound,
-                    false
+                    finalStint,
+                    averageTireWear(laps.slice(stintBegin, i)).combined
                 ),
             ]
 
             stintBegin = laps[i].number + 1
-        } else if (laps.length - 1 === i) {
-            stints = [
-                ...stints,
-                new Stint(
-                    stintBegin,
-                    laps[i].number,
-                    laps[i].frontCompound,
-                    true
-                ),
-            ]
         }
     }
 
@@ -66,6 +62,7 @@ const LapsRenderer: FC<{ driver: Driver; raceLaps: number }> = ({
                             width: `${(stintLength / raceLaps) * 100}%`,
                             backgroundColor: color,
                         }}
+                        title={`Avg. wear: ${s.averageTireWear}`}
                     >
                         {stintLength}
                     </div>
