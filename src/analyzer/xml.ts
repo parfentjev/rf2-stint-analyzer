@@ -1,6 +1,5 @@
 import { parseString } from 'xml2js'
 import { Lap, Race, RaceResults } from './models'
-import { averageTireWear } from './analyzer'
 
 export const readFile = (file: File) => {
     return new Promise<string>((resolve, reject) => {
