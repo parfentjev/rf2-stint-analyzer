@@ -23,10 +23,10 @@ export const averageTireWear = (laps: Lap[]): AverageTireWear => {
         rearRightTotal += l.rearRightWear
     })
 
-    const frontLeft = 1 - frontLeftTotal / totalLaps
-    const frontRight = 1 - frontRightTotal / totalLaps
-    const rearLeft = 1 - rearLeftTotal / totalLaps
-    const rearRight = 1 - rearRightTotal / totalLaps
+    const frontLeft = frontLeftTotal / totalLaps
+    const frontRight = frontRightTotal / totalLaps
+    const rearLeft = rearLeftTotal / totalLaps
+    const rearRight = rearRightTotal / totalLaps
 
     return {
         combined: Number(

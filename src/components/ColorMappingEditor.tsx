@@ -17,7 +17,7 @@ const ColorMappingEditor: FC = () => {
                 <InputElement
                     id="mapper"
                     labelText="Tire Mappings"
-                    onClick={mapperHandler}
+                    htmlProps={{ onClick: mapperHandler }}
                 />
             </div>
             <div>

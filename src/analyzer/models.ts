@@ -23,6 +23,7 @@ export type Lap = {
     rearCompound: string
     rearLeftWear: number
     rearRightWear: number
+    averageWear: number
     pit?: string
 }
 

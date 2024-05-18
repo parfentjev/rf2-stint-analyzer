@@ -1,22 +1,22 @@
 import { FC } from 'react'
 import { Driver } from '../analyzer/models'
 import { useAppContext } from '../storage/app-context'
-import { averageTireWear } from '../analyzer/analyzer'
+
+interface LapsRendererProps {
+    driver: Driver
+    raceLaps: number
+}
 
 type Stint = {
     begin: number
     end: number
     compound: string
     final: boolean
-    averageTireWear: number
 }
 
-const LapsRenderer: FC<{ driver: Driver; raceLaps: number }> = ({
-    driver,
-    raceLaps,
-}) => {
+const LapsRenderer: FC<LapsRendererProps> = (props) => {
     const context = useAppContext()
-    const laps = driver.laps
+    const laps = props.driver.laps
 
     var stints: Stint[] = []
     var stintBegin = 1
@@ -35,8 +35,6 @@ const LapsRenderer: FC<{ driver: Driver; raceLaps: number }> = ({
                     // which is normallly the case
                     compound: laps[i].frontCompound,
                     final: finalStint,
-                    averageTireWear: averageTireWear(laps.slice(stintBegin, i))
-                        .combined,
                 },
             ]
 
@@ -45,31 +43,36 @@ const LapsRenderer: FC<{ driver: Driver; raceLaps: number }> = ({
     }
 
     return (
-        <div className="progress-bar" style={{ width: `100%` }}>
-            {stints.map((s) => {
-                const stintLength = s.end - s.begin + 1
-                const color =
-                    context.compoundColors.find(
-                        (i) => i.name.toUpperCase() === s.compound.toUpperCase()
-                    )?.color || ''
+        <>
+            <div className="progress-bar" style={{ width: `100%` }}>
+                {stints.map((s) => {
+                    const stintLength = s.end - s.begin + 1
+                    const color =
+                        context.compoundColors.find(
+                            (i) =>
+                                i.name.toUpperCase() ===
+                                s.compound.toUpperCase()
+                        )?.color || ''
 
-                return (
-                    <div
-                        key={`${s.begin}-${s.end}`}
-                        className={`progress-section ${
-                            !s.final && 'section-divider'
-                        }`}
-                        style={{
-                            width: `${(stintLength / raceLaps) * 100}%`,
-                            backgroundColor: color,
-                        }}
-                        title={`Avg. wear: ${s.averageTireWear}`}
-                    >
-                        {stintLength}
-                    </div>
-                )
-            })}
-        </div>
+                    return (
+                        <div
+                            key={`${s.begin}-${s.end}`}
+                            className={`progress-section ${
+                                !s.final && 'section-divider'
+                            }`}
+                            style={{
+                                width: `${
+                                    (stintLength / props.raceLaps) * 100
+                                }%`,
+                                backgroundColor: color,
+                            }}
+                        >
+                            {stintLength}
+                        </div>
+                    )
+                })}
+            </div>
+        </>
     )
 }
 

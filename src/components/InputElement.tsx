@@ -1,18 +1,15 @@
-import { FC, InputHTMLAttributes, MouseEvent } from 'react'
+import { FC, InputHTMLAttributes } from 'react'
 
-interface InputElementProps extends InputHTMLAttributes<HTMLInputElement> {
+interface InputElementProps {
     id: string
     labelText: string
+    htmlProps: InputHTMLAttributes<HTMLInputElement>
 }
 
 export const InputElement: FC<InputElementProps> = (props) => {
     return (
         <>
-            <input
-                type={props.type ?? 'button'}
-                className="hidden"
-                {...props}
-            />
+            <input id={props.id} className="hidden" {...props.htmlProps} />
             <label htmlFor={props.id} className="action-label">
                 {props.labelText}
             </label>

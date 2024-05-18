@@ -1,5 +1,6 @@
 import { parseString } from 'xml2js'
 import { Lap, Race, RaceResults } from './models'
+import { averageTireWear } from './analyzer'
 
 export const readFile = (file: File) => {
     return new Promise<string>((resolve, reject) => {
@@ -53,17 +54,30 @@ const mapLaps = (laps: any): Lap[] => {
     }
 
     return laps.map((l: any) => {
-        return {
+        const lap: Lap = {
             number: Number(l.$.num),
             time: Number(l.$.et),
             frontCompound: extractCompoundName(l.$.fcompound),
-            frontLeftWear: Number(l.$.twfl),
-            frontRightWear: Number(l.$.twfr),
+            frontLeftWear: 1 - Number(l.$.twfl),
+            frontRightWear: 1 - Number(l.$.twfr),
             rearCompound: extractCompoundName(l.$.rcompound),
-            rearLeftWear: Number(l.$.twrl),
-            rearRightWear: Number(l.$.twrr),
+            rearLeftWear: 1 - Number(l.$.twrl),
+            rearRightWear: 1 - Number(l.$.twrr),
+            averageWear: 0,
             pit: l.$.pit,
         }
+
+        lap.averageWear = Number(
+            (
+                (lap.frontLeftWear +
+                    lap.frontLeftWear +
+                    lap.rearLeftWear +
+                    lap.rearRightWear) /
+                4
+            ).toFixed(2)
+        )
+
+        return lap
     })
 }
 

@@ -69,12 +69,12 @@ const RaceResultsRenderer: FC<{ results: RaceResults }> = ({ results }) => {
                 <InputElement
                     id="save"
                     labelText="Save"
-                    onClick={saveHandler}
+                    htmlProps={{ onClick: saveHandler }}
                 />
                 <InputElement
                     id="editor"
                     labelText="Editor"
-                    onClick={editorHandler}
+                    htmlProps={{ onClick: editorHandler }}
                 />
                 {showEditor && (
                     <JsonEditor data={raceResults} onRefresh={refreshHandler} />

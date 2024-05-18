@@ -46,7 +46,7 @@ const JsonEditor = <T,>({ data, onRefresh }: JsonEditorProps<T>) => {
             <InputElement
                 id="refresh"
                 labelText="Refresh"
-                onClick={refreshHandler}
+                htmlProps={{ onClick: refreshHandler }}
             />
         </div>
     )

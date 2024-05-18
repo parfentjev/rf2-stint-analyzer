@@ -42,9 +42,11 @@ const UploadForm: FC<UploadFormProps> = (props) => {
                 <InputElement
                     id="file"
                     labelText={fileLabel}
-                    type="file"
-                    accept="*.xml"
-                    onChange={fileHandler}
+                    htmlProps={{
+                        type: 'file',
+                        accept: '*.xml',
+                        onChange: fileHandler,
+                    }}
                 />
             </div>
         </>
