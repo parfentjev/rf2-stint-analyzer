@@ -2,7 +2,6 @@ import { FC } from 'react'
 import { Lap } from '../analyzer/models'
 import {
     CartesianGrid,
-    Label,
     Legend,
     Line,
     LineChart,
