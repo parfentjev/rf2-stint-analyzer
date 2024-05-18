@@ -2,6 +2,7 @@ import { FC } from 'react'
 import { Lap } from '../analyzer/models'
 import {
     CartesianGrid,
+    Label,
     Legend,
     Line,
     LineChart,
@@ -43,7 +44,12 @@ const TireUsageChart: FC<TireUsageChartProps> = (props) => {
             <LineChart data={dataPoints}>
                 <CartesianGrid strokeDasharray="3 3" stroke="white" />
                 <XAxis dataKey="number" stroke="white" interval={1} />
-                <YAxis dataKey="averageWear" stroke="white" domain={[0, 1]} />
+                <YAxis
+                    dataKey="averageWear"
+                    stroke="white"
+                    domain={[0, 1]}
+                    hide
+                />
                 <Tooltip
                     contentStyle={{
                         backgroundColor: 'var(--color2)',
