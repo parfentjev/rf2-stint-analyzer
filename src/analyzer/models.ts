@@ -1,33 +1,29 @@
-export class RaceResults {
-    constructor(public venue: string, public date: string, public race: Race) {}
+export type RaceResults = {
+    venue: string
+    race: Race
 }
 
-export class Race {
-    constructor(public laps: number, public drivers: Driver[]) {}
+export type Race = {
+    laps: number
+    drivers: Driver[]
 }
 
-export class Driver {
-    constructor(
-        public name: string,
-        public position: number,
-        public laps: Lap[]
-    ) {}
+export type Driver = {
+    name: string
+    position: number
+    laps: Lap[]
 }
 
-export class Lap {
-    constructor(
-        public number: number,
-        public time: number,
-        public frontCompound: string,
-        public frontLeftWear: number,
-        public frontRightWear: number,
-        public rearCompound: string,
-        public rearLeftWear: number,
-        public rearRightWear: number,
-        public pit?: string
-    ) {}
+export type Lap = {
+    number: number
+    time: number
+    frontCompound: string
+    frontLeftWear: number
+    frontRightWear: number
+    rearCompound: string
+    rearLeftWear: number
+    rearRightWear: number
+    pit?: string
 }
 
-export class CompoundColor {
-    constructor(public name: string, public color: string) {}
-}
+export type CompoundColor = { name: string; color: string }

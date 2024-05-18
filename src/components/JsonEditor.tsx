@@ -5,6 +5,7 @@ import 'ace-builds/src-noconflict/mode-javascript'
 import 'ace-builds/src-noconflict/theme-monokai'
 import 'ace-builds/src-noconflict/ext-language_tools'
 import 'ace-builds/webpack-resolver'
+import InputElement from './InputElement'
 
 interface JsonEditorProps<T> {
     data: T
@@ -42,15 +43,11 @@ const JsonEditor = <T,>({ data, onRefresh }: JsonEditorProps<T>) => {
                 fontSize="1rem"
                 lineHeight={19}
             />
-            <input
+            <InputElement
                 id="refresh"
-                type="button"
-                className="hidden"
+                labelText="Refresh"
                 onClick={refreshHandler}
             />
-            <label htmlFor="refresh" className="action-label">
-                Refresh
-            </label>
         </div>
     )
 }

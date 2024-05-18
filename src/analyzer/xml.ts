@@ -1,5 +1,5 @@
 import { parseString } from 'xml2js'
-import { Driver, Lap, Race, RaceResults } from './models'
+import { Lap, Race, RaceResults } from './models'
 
 export const readFile = (file: File) => {
     return new Promise<string>((resolve, reject) => {
@@ -17,7 +17,7 @@ export const readFile = (file: File) => {
     })
 }
 
-export const deserializeXML = (xml: string) => {
+export const deserializeXML = (xml: string): Promise<RaceResults> => {
     return new Promise<RaceResults>((resolve, reject) => {
         parseString(xml, (error, result) => {
             if (error) {
@@ -25,22 +25,21 @@ export const deserializeXML = (xml: string) => {
             } else {
                 const raceResult = result.rFactorXML.RaceResults[0]
 
-                const race = new Race(
-                    raceResult.Race[0].Laps[0],
-                    raceResult.Race[0].Driver.map((d: any) => {
-                        return new Driver(
-                            d.Name[0],
-                            Number(d.Position[0]),
-                            mapLaps(d.Lap)
-                        )
-                    })
-                )
+                const race: Race = {
+                    laps: raceResult.Race[0].Laps[0],
+                    drivers: raceResult.Race[0].Driver.map((d: any) => {
+                        return {
+                            name: d.Name[0],
+                            position: Number(d.Position[0]),
+                            laps: mapLaps(d.Lap),
+                        }
+                    }),
+                }
 
-                const output = new RaceResults(
-                    raceResult.TrackCourse[0],
-                    raceResult.TimeString[0],
-                    race
-                )
+                const output: RaceResults = {
+                    venue: raceResult.TrackCourse[0],
+                    race: race,
+                }
 
                 resolve(output)
             }
@@ -48,26 +47,26 @@ export const deserializeXML = (xml: string) => {
     })
 }
 
-const mapLaps = (laps: any) => {
+const mapLaps = (laps: any): Lap[] => {
     if (!laps) {
-        return null
+        return []
     }
 
     return laps.map((l: any) => {
-        return new Lap(
-            Number(l.$.num),
-            Number(l.$.et),
-            extractCompoundName(l.$.fcompound),
-            Number(l.$.twfl),
-            Number(l.$.twfr),
-            extractCompoundName(l.$.rcompound),
-            Number(l.$.twrl),
-            Number(l.$.twrr),
-            l.$.pit
-        )
+        return {
+            number: Number(l.$.num),
+            time: Number(l.$.et),
+            frontCompound: extractCompoundName(l.$.fcompound),
+            frontLeftWear: Number(l.$.twfl),
+            frontRightWear: Number(l.$.twfr),
+            rearCompound: extractCompoundName(l.$.rcompound),
+            rearLeftWear: Number(l.$.twrl),
+            rearRightWear: Number(l.$.twrr),
+            pit: l.$.pit,
+        }
     })
 }
 
-const extractCompoundName = (rawValue: string) => {
+const extractCompoundName = (rawValue: string): string => {
     return rawValue.split(',')[1]
 }

@@ -15,10 +15,10 @@ export const AppContextProvider: FC<{ children: ReactNode }> = ({
     children,
 }) => {
     const [compoundColors, setCompoundColors] = useState([
-        new CompoundColor('Soft', 'rgb(255, 255, 255)'),
-        new CompoundColor('Medium', 'rgb(255, 213, 0)'),
-        new CompoundColor('Hard', 'rgb(26, 213, 0)'),
-        new CompoundColor('Wet', 'rgb(0, 21, 255)'),
+        { name: 'Soft', color: 'rgb(255, 255, 255)' },
+        { name: 'Medium', color: 'rgb(255, 213, 0)' },
+        { name: 'Hard', color: 'rgb(26, 213, 0)' },
+        { name: 'Wet', color: 'rgb(0, 21, 255)' },
     ])
 
     const value = {

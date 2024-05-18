@@ -3,14 +3,12 @@ import { Driver } from '../analyzer/models'
 import { useAppContext } from '../storage/app-context'
 import { averageTireWear } from '../analyzer/analyzer'
 
-class Stint {
-    constructor(
-        public begin: number,
-        public end: number,
-        public compound: string,
-        public final: boolean,
-        public averageTireWear: number
-    ) {}
+type Stint = {
+    begin: number
+    end: number
+    compound: string
+    final: boolean
+    averageTireWear: number
 }
 
 const LapsRenderer: FC<{ driver: Driver; raceLaps: number }> = ({
@@ -30,13 +28,16 @@ const LapsRenderer: FC<{ driver: Driver; raceLaps: number }> = ({
         if (pitted || finalStint) {
             stints = [
                 ...stints,
-                new Stint(
-                    stintBegin,
-                    laps[i].number,
-                    laps[i].frontCompound,
-                    finalStint,
-                    averageTireWear(laps.slice(stintBegin, i)).combined
-                ),
+                {
+                    begin: stintBegin,
+                    end: laps[i].number,
+                    // assuming front and rear compounds are equal
+                    // which is normallly the case
+                    compound: laps[i].frontCompound,
+                    final: finalStint,
+                    averageTireWear: averageTireWear(laps.slice(stintBegin, i))
+                        .combined,
+                },
             ]
 
             stintBegin = laps[i].number + 1

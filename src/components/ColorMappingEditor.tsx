@@ -1,6 +1,7 @@
 import { FC, useState } from 'react'
 import { AppContextProvider, useAppContext } from '../storage/app-context'
 import JsonEditor from './JsonEditor'
+import InputElement from './InputElement'
 
 const ColorMappingEditor: FC = () => {
     const { compoundColors, setCompoundColors } = useAppContext()
@@ -13,15 +14,11 @@ const ColorMappingEditor: FC = () => {
     return (
         <AppContextProvider>
             <div className="text-center">
-                <input
+                <InputElement
                     id="mapper"
-                    type="button"
-                    className="hidden"
+                    labelText="Tire Mappings"
                     onClick={mapperHandler}
                 />
-                <label htmlFor="mapper" className="action-label">
-                    Tire Mappings
-                </label>
             </div>
             <div>
                 {showMappings && (

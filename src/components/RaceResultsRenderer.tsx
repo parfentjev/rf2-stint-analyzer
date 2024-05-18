@@ -4,6 +4,7 @@ import DriverRenderer from './DriverRenderer'
 import html2canvas from 'html2canvas'
 import JsonEditor from './JsonEditor'
 import { useAppContext } from '../storage/app-context'
+import InputElement from './InputElement'
 
 const RaceResultsRenderer: FC<{ results: RaceResults }> = ({ results }) => {
     const resultsRef = useRef<HTMLDivElement>(null)
@@ -65,24 +66,16 @@ const RaceResultsRenderer: FC<{ results: RaceResults }> = ({ results }) => {
                 </div>
             </div>
             <div className="text-center">
-                <input
+                <InputElement
                     id="save"
-                    type="button"
-                    className="hidden"
+                    labelText="Save"
                     onClick={saveHandler}
                 />
-                <label htmlFor="save" className="action-label">
-                    Save
-                </label>
-                <input
+                <InputElement
                     id="editor"
-                    type="button"
-                    className="hidden"
+                    labelText="Editor"
                     onClick={editorHandler}
                 />
-                <label htmlFor="editor" className="action-label">
-                    Editor
-                </label>
                 {showEditor && (
                     <JsonEditor data={raceResults} onRefresh={refreshHandler} />
                 )}
