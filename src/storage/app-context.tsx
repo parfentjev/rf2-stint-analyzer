@@ -8,7 +8,7 @@ type AppContextProps = {
 
 export const AppContext = createContext<AppContextProps>({
     compoundColors: [],
-    setCompoundColors: (compoundColors: CompoundColor[]) => {},
+    setCompoundColors: () => {},
 })
 
 export const AppContextProvider: FC<{ children: ReactNode }> = ({
@@ -18,7 +18,7 @@ export const AppContextProvider: FC<{ children: ReactNode }> = ({
         { name: 'Soft', color: 'rgb(255, 255, 255)' },
         { name: 'Medium', color: 'rgb(255, 213, 0)' },
         { name: 'Hard', color: 'rgb(26, 213, 0)' },
-        { name: 'Wet', color: 'rgb(0, 21, 255)' },
+        { name: 'Wet', color: 'rgb(62, 210, 255)' },
     ])
 
     const value = {

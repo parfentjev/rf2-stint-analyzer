@@ -69,7 +69,7 @@ const mapLaps = (laps: any): Lap[] => {
         lap.averageWear = Number(
             (
                 (lap.frontLeftWear +
-                    lap.frontLeftWear +
+                    lap.frontRightWear +
                     lap.rearLeftWear +
                     lap.rearRightWear) /
                 4
