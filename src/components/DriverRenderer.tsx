@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { Driver, Race } from '../analyzer/models'
 import LapsRenderer from './LapsRenderer'
 import TireUsageChart from './TireUsageChart'
@@ -6,10 +6,15 @@ import TireUsageChart from './TireUsageChart'
 interface DriverRendererProps {
     driver: Driver
     race: Race
+    forceShowChart: boolean
 }
 
-const DriverRenderer: FC<DriverRendererProps> = ({ driver, race }) => {
+const DriverRenderer: FC<DriverRendererProps> = (props) => {
     const [showCharts, setShowCharts] = useState(false)
+
+    useEffect(() => {
+        setShowCharts(props.forceShowChart)
+    }, [props.forceShowChart])
 
     const driverOnClickHandler = () => {
         setShowCharts((s) => !s)
@@ -18,15 +23,19 @@ const DriverRenderer: FC<DriverRendererProps> = ({ driver, race }) => {
     return (
         <div className="driver-row">
             <p className="driver-name" onClick={driverOnClickHandler}>
-                P{driver.position} {driver.name} {!driver.laps && '— no data'}
+                <strong>P{props.driver.position}</strong> {props.driver.name}{' '}
+                {!props.driver.laps && '— no data'}
             </p>
-            {driver.laps && (
+            {props.driver.laps && (
                 <>
-                    <LapsRenderer driver={driver} raceLaps={race.laps} />
+                    <LapsRenderer
+                        driver={props.driver}
+                        raceLaps={props.race.laps}
+                    />
                     {showCharts && (
                         <TireUsageChart
-                            laps={driver.laps}
-                            raceLaps={race.laps}
+                            laps={props.driver.laps}
+                            raceLaps={props.race.laps}
                         />
                     )}
                 </>

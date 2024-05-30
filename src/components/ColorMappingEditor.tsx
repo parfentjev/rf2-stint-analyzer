@@ -8,7 +8,7 @@ const ColorMappingEditor: FC = () => {
     const [showMappings, setShowMappings] = useState(false)
 
     const mapperHandler = () => {
-        setShowMappings(!showMappings)
+        setShowMappings(s => !s)
     }
 
     return (

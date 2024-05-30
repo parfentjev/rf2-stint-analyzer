@@ -6,12 +6,17 @@ import JsonEditor from './JsonEditor'
 import { useAppContext } from '../storage/app-context'
 import InputElement from './InputElement'
 
-const RaceResultsRenderer: FC<{ results: RaceResults }> = ({ results }) => {
+interface RaceResultsRendererProps {
+    results: RaceResults
+}
+
+const RaceResultsRenderer: FC<RaceResultsRendererProps> = (props) => {
     const resultsRef = useRef<HTMLDivElement>(null)
 
     const { compoundColors } = useAppContext()
-    const [raceResults, setRaceResults] = useState(results)
+    const [raceResults, setRaceResults] = useState(props.results)
     const [showEditor, setShowEditor] = useState(false)
+    const [forceShowCharts, setForceShowCharts] = useState(false)
 
     const saveHandler = () => {
         if (!resultsRef.current) {
@@ -31,11 +36,15 @@ const RaceResultsRenderer: FC<{ results: RaceResults }> = ({ results }) => {
     }
 
     const editorHandler = () => {
-        setShowEditor(!showEditor)
+        setShowEditor((s) => !s)
     }
 
     const refreshHandler = (newResults: RaceResults) => {
         setRaceResults(newResults)
+    }
+
+    const driversChartsHandler = () => {
+        setForceShowCharts((s) => !s)
     }
 
     return (
@@ -51,6 +60,7 @@ const RaceResultsRenderer: FC<{ results: RaceResults }> = ({ results }) => {
                             key={d.name}
                             driver={d}
                             race={raceResults.race}
+                            forceShowChart={forceShowCharts}
                         />
                     ))}
                 <div className="tire-colors">
@@ -70,6 +80,11 @@ const RaceResultsRenderer: FC<{ results: RaceResults }> = ({ results }) => {
                     id="save"
                     labelText="Save"
                     htmlProps={{ onClick: saveHandler }}
+                />
+                <InputElement
+                    id="charts"
+                    labelText="Toggle Charts"
+                    htmlProps={{ onClick: driversChartsHandler }}
                 />
                 <InputElement
                     id="editor"
